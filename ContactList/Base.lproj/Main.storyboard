@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="v9W-NV-egm">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -16,9 +17,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="1CS-Bh-bnK">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="1CS-Bh-bnK">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <variation key="heightClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
+                                </variation>
+                                <variation key="heightClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
+                                </variation>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="600"/>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="800" height="400"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="800"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="Z3k-bC-SVl"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="ibf-82-BDq"/>
@@ -26,10 +45,16 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="1CS-Bh-bnK" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-16" id="C4T-6D-NMS"/>
+                            <constraint firstItem="1CS-Bh-bnK" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="ITA-AR-hwI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="1CS-Bh-bnK" secondAttribute="trailing" constant="-16" id="Lj5-Cf-tPT"/>
+                            <constraint firstItem="1CS-Bh-bnK" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottomMargin" id="RyB-N7-dBm"/>
+                        </constraints>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="u0n-2J-j66">
-                        <barButtonItem key="leftBarButtonItem" title="Descend" id="cth-uo-EMe">
+                        <barButtonItem key="leftBarButtonItem" title="Sort(↑)" id="cth-uo-EMe">
                             <connections>
                                 <action selector="sortButtonPressed:" destination="BYZ-38-t0r" id="1Vd-ul-TKg"/>
                             </connections>
@@ -44,9 +69,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1008" y="358"/>
+            <point key="canvasLocation" x="-561" y="1115"/>
         </scene>
-        <!--Detail View Controller-->
+        <!--Contact Detail-->
         <scene sceneID="tqG-EX-Spg">
             <objects>
                 <viewController id="tT5-hw-cjY" customClass="DetailViewController" customModule="ContactList" customModuleProvider="target" sceneMemberID="viewController">
@@ -57,12 +82,90 @@
                     <view key="view" contentMode="scaleToFill" id="tdr-8R-Ne3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="DkC-AT-zAl">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DetailTableViewCell" rowHeight="85" id="ujJ-eH-GXJ" customClass="DetailTableViewCell" customModule="ContactList" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ujJ-eH-GXJ" id="D9e-xG-Kjg">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Header" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQX-kc-Pf7">
+                                                    <rect key="frame" x="8" y="8" width="68" height="24"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Content" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rtu-84-dix">
+                                                    <rect key="frame" x="8" y="42" width="583" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="8" y="42" width="584" height="21"/>
+                                                    </variation>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="bQX-kc-Pf7" firstAttribute="top" secondItem="D9e-xG-Kjg" secondAttribute="topMargin" id="1B7-5Z-r9Q"/>
+                                                <constraint firstItem="Rtu-84-dix" firstAttribute="leading" secondItem="D9e-xG-Kjg" secondAttribute="leadingMargin" id="Gie-PJ-2LL"/>
+                                                <constraint firstItem="Rtu-84-dix" firstAttribute="top" secondItem="bQX-kc-Pf7" secondAttribute="bottom" constant="10" id="HDO-YF-pFT"/>
+                                                <constraint firstItem="Rtu-84-dix" firstAttribute="trailing" secondItem="D9e-xG-Kjg" secondAttribute="trailingMargin" id="eW4-m2-AsC"/>
+                                                <constraint firstItem="bQX-kc-Pf7" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="D9e-xG-Kjg" secondAttribute="trailingMargin" id="elq-Hq-eGc"/>
+                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="Rtu-84-dix" secondAttribute="bottom" id="mrO-Mu-c9d"/>
+                                                <constraint firstItem="bQX-kc-Pf7" firstAttribute="leading" secondItem="D9e-xG-Kjg" secondAttribute="leadingMargin" id="yXL-9S-JkT"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="contentLabel" destination="Rtu-84-dix" id="iHP-ki-s8G"/>
+                                            <outlet property="headerLabel" destination="bQX-kc-Pf7" id="aFa-XF-xMk"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <variation key="heightClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
+                                </variation>
+                                <variation key="heightClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
+                                </variation>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="600"/>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="800" height="400"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="800"/>
+                                </variation>
+                                <connections>
+                                    <outlet property="dataSource" destination="tT5-hw-cjY" id="Zqj-7w-Tms"/>
+                                    <outlet property="delegate" destination="tT5-hw-cjY" id="EC4-F7-a3d"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="DkC-AT-zAl" firstAttribute="bottom" secondItem="tdr-8R-Ne3" secondAttribute="bottomMargin" id="HhO-cp-VZl"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="DkC-AT-zAl" secondAttribute="trailing" constant="-16" id="L6y-fz-WRe"/>
+                            <constraint firstItem="DkC-AT-zAl" firstAttribute="top" secondItem="tdr-8R-Ne3" secondAttribute="topMargin" id="N6Q-G7-Q2R"/>
+                            <constraint firstItem="DkC-AT-zAl" firstAttribute="leading" secondItem="tdr-8R-Ne3" secondAttribute="leadingMargin" constant="-16" id="vZR-Wq-sp8"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Contact Detail" id="rVt-k8-gCk"/>
+                    <connections>
+                        <outlet property="detailTableView" destination="DkC-AT-zAl" id="MWo-hk-ZnJ"/>
+                        <outlet property="navbarTitle" destination="rVt-k8-gCk" id="Ujf-68-XKI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="19s-N8-uQu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1745" y="358"/>
+            <point key="canvasLocation" x="196" y="1115"/>
         </scene>
         <!--Loading View Controller-->
         <scene sceneID="0lz-d7-VoW">
@@ -93,6 +196,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="y6w-0e-UIF">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.53511757556015893" green="0.7800172067455402" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

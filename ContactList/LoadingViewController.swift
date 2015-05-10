@@ -14,10 +14,16 @@ class LoadingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "rotated", name: UIDeviceOrientationDidChangeNotification, object: nil)
+
         util.showActivityIndicator(self.view)
-        
-        // Do any additional setup after loading the view.
-        
+    }
+    
+    func rotated()
+    {
+        util.hideActivityIndicator(self.view)
+        util.showActivityIndicator(self.view)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -31,11 +37,10 @@ class LoadingViewController: UIViewController {
         if let json: NSArray = NSJSONSerialization.JSONObjectWithData(data!, options: nil, error: nil) as? NSArray {
             for item in json {
                 names.append(ContactItem(json: item as! NSDictionary))
-                // construct your model objects here
             }
         }
         
-        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
         dispatch_after(delayTime, dispatch_get_main_queue()) {
             self.util.hideActivityIndicator(self.view)
             self.performSegueWithIdentifier("FinishedLoading", sender: self)
@@ -44,24 +49,17 @@ class LoadingViewController: UIViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     
-    
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
         super.prepareForSegue(segue, sender: sender)
         if segue.identifier == "FinishedLoading"{
             if let destinationVC = segue.destinationViewController as? UINavigationController{
                 for vc in destinationVC.childViewControllers{
-                    if let currentVC = destinationVC.childViewControllers[0] as? ViewController{
+                    if let nextVC = destinationVC.childViewControllers[0] as? ViewController{
                         let sortedNames = names.sorted { $0.trimmedName < $1.trimmedName }
-                        currentVC.names = sortedNames
+                        nextVC.names = sortedNames
                     }
                 }
             }

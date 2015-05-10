@@ -15,15 +15,14 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     let cellIdentifier = "ContactCell"
     
     var names:[ContactItem] = []
+    var selectedItem: ContactItem = ContactItem()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -32,8 +31,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         return names.count
     }
     
-    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath)
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
+        selectedItem = names[indexPath.row]
         self.performSegueWithIdentifier("ShowContactDetail", sender: self)
     }
     
@@ -64,26 +64,22 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
     @IBAction func sortButtonPressed(sender: UIBarButtonItem) {
-        if sortButton.title == "Descend"{
+        if sortButton.title == "Sort(↑)"{
             names = names.sorted { $0.trimmedName > $1.trimmedName }
-            sortButton.title = "Ascend"
+            sortButton.title = "Sort(↓)"
         }else{
             names = names.sorted { $0.trimmedName < $1.trimmedName }
-            sortButton.title = "Descend"
+            sortButton.title = "Sort(↑)"
         }
         contactTableView.reloadData()
     }
     
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
         super.prepareForSegue(segue, sender: sender)
         if segue.identifier == "ShowContactDetail"{
             if let destinationVC = segue.destinationViewController as? DetailViewController{
+                destinationVC.contact = selectedItem
             }
         }
     }
 }
-
