@@ -35,8 +35,6 @@ class LoadingViewController: UIViewController {
         
         var data = NSData(contentsOfURL: url!)
         
-        println(NSString(data: data!, encoding: NSUTF8StringEncoding))
-        
         // Deserialize JSON and append the ContactItem object to array
         if let json: NSArray = NSJSONSerialization.JSONObjectWithData(data!, options: nil, error: nil) as? NSArray {
             for item in json {
