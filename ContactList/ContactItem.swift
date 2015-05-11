@@ -3,8 +3,10 @@
 //  ContactList
 //
 //  Created by Zhang Le on 15/5/6.
-//  Copyright (c) 2015年 LeZhang. All rights reserved.
+//  Copyright (c) 2015 LeZhang. All rights reserved.
 //
+//  This file defines the class of objects returned in the HTTP request.
+//  JSON return is converted to objects.
 
 import UIKit
 
@@ -20,15 +22,22 @@ class ContactItem {
     var company: CompanyItem
     
     private var _trimmedName: String;
+    // Trim the name of any common title
     var trimmedName: String{
         set{
+            // Name is too short to have title
             if count(newValue) < 4{
                 _trimmedName = newValue
             }else{
+                // If name has a title, remove it for sorting
                 let initial = (newValue.lowercaseString as NSString).substringWithRange(NSRange(location: 0, length: 4))
                 if  initial == "mr. "{
                     _trimmedName = newValue.substringWithRange(Range<String.Index>(start: advance(newValue.startIndex, 4), end: newValue.endIndex))
+                }else if  initial == "ms. "{
+                    _trimmedName = newValue.substringWithRange(Range<String.Index>(start: advance(newValue.startIndex, 4), end: newValue.endIndex))
                 }else if initial == "mrs."{
+                    _trimmedName = newValue.substringWithRange(Range<String.Index>(start: advance(newValue.startIndex, 5), end: newValue.endIndex))
+                }else if initial == "miss"{
                     _trimmedName = newValue.substringWithRange(Range<String.Index>(start: advance(newValue.startIndex, 5), end: newValue.endIndex))
                 }else{
                     _trimmedName = newValue
@@ -38,19 +47,6 @@ class ContactItem {
         get{
             return _trimmedName;
         }
-    }
-    
-    init(json: NSDictionary) {
-        self._trimmedName = ""
-        self.id = json["id"] as! Int
-        self.name = json["name"] as! String
-        self.username = json["username"] as! String
-        self.email = json["email"] as! String
-        self.address = AddressItem(json: json["address"] as! NSDictionary)
-        self.phone = json["phone"] as! String
-        self.website = json["website"] as! String
-        self.company = CompanyItem(json: json["company"] as! NSDictionary)
-        self.trimmedName = json["name"] as! String
     }
     
     init(){
@@ -64,6 +60,59 @@ class ContactItem {
         self.website = ""
         self.company = CompanyItem()
         self.trimmedName = ""
+    }
+    
+    init(json: NSDictionary) {
+        self._trimmedName = ""
+        
+        if let id = json["id"] as? Int{
+            self.id = id
+        }else{
+            self.id = 0
+        }
+        
+        if let name = json["name"] as? String{
+            self.name = name
+        }else{
+            self.name = ""
+        }
+        
+        if let username = json["username"] as? String{
+            self.username = username
+        }else{
+            self.username = ""
+        }
+        
+        if let email = json["email"] as? String{
+            self.email = email
+        }else{
+            self.email = ""
+        }
+        
+        if let address = json["address"] as? NSDictionary{
+            self.address = AddressItem(json: address)
+        }else{
+            self.address = AddressItem()
+        }
+        
+        if let phone = json["phone"] as? String{
+            self.phone = phone
+        }else{
+            self.phone = ""
+        }
+        
+        if let website = json["website"] as? String{
+            self.website = website
+        }else{
+            self.website = ""
+        }
+        
+        if let company = json["company"] as? NSDictionary{
+            self.company = CompanyItem(json: company)
+        }else{
+            self.company = CompanyItem()
+        }
+        self.trimmedName = self.name
     }
 }
 
@@ -84,11 +133,35 @@ class AddressItem{
     }
     
     init(json: NSDictionary) {
-        self.street = json["street"] as! String
-        self.suite = json["suite"] as! String
-        self.city = json["city"] as! String
-        self.zipcode = json["zipcode"] as! String
-        self.geo = GeoItem(json: json["geo"] as! NSDictionary)
+        if let street = json["street"] as? String{
+            self.street = street
+        }else{
+            self.street = ""
+        }
+        
+        if let suite = json["suite"] as? String{
+            self.suite = suite
+        }else{
+            self.suite = ""
+        }
+        
+        if let city = json["city"] as? String{
+            self.city = city
+        }else{
+            self.city = ""
+        }
+        
+        if let zipcode = json["zipcode"] as? String{
+            self.zipcode = zipcode
+        }else{
+            self.zipcode = ""
+        }
+        
+        if let geo = json["geo"] as? NSDictionary{
+            self.geo = GeoItem(json: geo)
+        }else{
+            self.geo = GeoItem()
+        }
     }
 }
 
@@ -105,9 +178,23 @@ class CompanyItem {
     }
     
     init(json: NSDictionary) {
-        self.name = json["name"] as! String
-        self.catchPhrase = json["catchPhrase"] as! String
-        self.bs = json["bs"] as! String
+        if let name = json["name"] as? String{
+            self.name = name
+        }else{
+            self.name = ""
+        }
+        
+        if let catchPhrase = json["catchPhrase"] as? String{
+            self.catchPhrase = catchPhrase
+        }else{
+            self.catchPhrase = ""
+        }
+        
+        if let bs = json["bs"] as? String{
+            self.bs = bs
+        }else{
+            self.bs = ""
+        }
     }
 }
 
@@ -122,7 +209,16 @@ class GeoItem {
     }
     
     init(json: NSDictionary) {
-        self.lat = json["lat"] as! String
-        self.lng = json["lng"] as! String
+        if let lat = json["lat"] as? String{
+            self.lat = lat
+        }else{
+            self.lat = ""
+        }
+        
+        if let lng = json["lng"] as? String{
+            self.lng = lng
+        }else{
+            self.lng = ""
+        }
     }
 }

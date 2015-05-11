@@ -1,5 +1,6 @@
 /*
 Courtesy of Eranga Bandara
+This is a customizable activity indicator.
 */
 
 import Foundation

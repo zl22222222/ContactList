@@ -3,7 +3,7 @@
 //  ContactList
 //
 //  Created by Zhang Le on 15/5/10.
-//  Copyright (c) 2015年 LeZhang. All rights reserved.
+//  Copyright (c) 2015 LeZhang. All rights reserved.
 //
 
 import UIKit
